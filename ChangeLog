@@ -1,0 +1,82 @@
+20080821	libnxml		0.18.3
+	Andreas Krennmair's patch about gzip support applied
+	Gregor Herrmann's patch about signals and curl
+
+20080226	libnxml		0.18.2
+	Andreas Krennmair's patch applied
+
+20070918	libnxml		0.18.1
+	Andreas Krennmair bug fix
+	size_t on macosx
+
+20070704	libnxml		0.18.0
+	new release for a corrent version number
+
+20070510	libnxml		0.17.3
+	jerome's patch about srcdir in the INCLUDE variable
+	attributes with ns
+	verifypeer default to FALSE
+	CURLCode and nxml_curl_error function
+
+20070418	libnxml		0.17.2
+	attribute example in nxml.h
+	empty attributes
+
+20070321	libnxml		0.17.1
+	bug about entities: fixed
+
+20070307	libnxml		0.17
+	documentations
+	entities
+
+20061229	libnxml		0.16
+	bug 25 - fixed - No prolog in XML 1.0
+	cacert is supported
+	correct indent of the TEXT node
+	no debian directory
+
+20061104	libnxml		0.15
+	proxy authentication (user and password)
+
+20061027	libnxml		0.14
+	basic/digest authentication
+
+20060911	libnxml		0.13
+	removed dtd support
+	support for proxy and certificated connection.
+
+20060712	libnxml		0.12
+	bugfixes in entities parser
+
+20060612	libnxml		0.11
+	nxml.pc updates
+
+20060607	libnxml		0.10
+	copyright uodates
+	entities in attributes
+
+20060307	libnxml		0.9
+	no memory leaks
+
+20060210	libnxml		0.8
+	conversion in utf8 of a integer only if the encoding IS utff8
+
+20060207	libnxml		0.7
+	a bugfixes in &#numb; utf8
+
+20060203	libnxml		0.6
+	litle bug fixes
+
+20060122	libnxml		0.5
+	doxygen
+
+20060104	libnxml		0.4
+	GPL -> LGPL
+
+20051215	libnxml		0.3
+	dtd
+	some bug fixes
+
+20050806	libnxml		0.2
+	Some defines
+	easy functions

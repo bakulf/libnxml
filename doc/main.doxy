@@ -1,0 +1,101 @@
+/*!\mainpage nXml Library
+ *
+ * \section Author
+ * Andrea Marchesini <baku@autistici.org> - Web Site: 
+ * https://github.com/bakulf/libnxml
+ *
+ * \section description Description
+ *
+ * nXML is a C library for parsing, writing and creating XML 1.0 and 1.1 files
+ * or streams. It supports utf-8, utf-16be and utf-16le, ucs-4 (1234, 4321,
+ * 2143, 2312).
+ *
+ * This library is tested on Linux, Windows, *BSD, Solaris, Minix 3.
+ *
+ * Why another XML library? Because it is fast, easy-to-use and -important- it 
+ * is my personal work about the second layer of the Semantic Web. Other my
+ * softwares are based on this library. Annotea
+ * (http://www.autistici.org/bakunin/annotea/), Morla
+ * (http://www.autistici.org/bakunin/morla/) and libmrss
+ * (https://github.com/bakulf/libmrss/).
+ *
+ * Why Nxml ? N is from
+ * <a href="http://en.wikipedia.org/wiki/Naples">Naples</a> a beautiful italian
+ * city. I was there when I started to write this code. Who doesn't know 
+ * Naples, maybe he should spend some day in that city because it is full of
+ * history, culture and wonderful people.
+ *
+ * \section License
+ *
+ * nXml is a FreeSoftware project released under
+ * <a href="http://www.gnu.org/licenses/lgpl.html">LGPL 2.0</a>.
+ *
+ * \section Required
+ *
+ * - <a href="http://curl.haxx.se/">libcurl</a> is a free and easy-to-use 
+ * client-side URL transfer library, supporting FTP, FTPS, HTTP, HTTPS, SCP, 
+ * SFTP, TFTP, TELNET, DICT, FILE and LDAP. libcurl supports SSL certificates, 
+ * HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, 
+ * cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, 
+ * Kerberos4), file transfer resume, http proxy tunneling and more!
+ *
+ * \section Download
+ *
+ * - libnxml https://github.com/bakulf/libnxml
+ *
+ * \section install1 Installation from source
+ *
+ * \code
+ * tar xvfz libnxml-<version>.tar.gz
+ * cd libnxml-<version>
+ * ./configure --prefix=/usr
+ * make
+ * make install
+ * \endcode
+ *
+ * \section install2 Installation from CVS
+ * Run the following commands in a directory that you have write access to
+ * (such as your home dirctory):
+ *
+ * \code
+ * cvs -d:pserver:anonymous@ippolita.net:/home/cvs login
+ * \endcode
+ * (Just hit enter for the password)
+ * \code
+ * cvs -z3 -d:pserver:anonymous@ippolita.net:/home/cvs co libnxml
+ * \endcode
+ *
+ * Once you have checked the source of libnxml, run the following commands:
+ *
+ * \code
+ * cd libnxml
+ * ./autogen.sh
+ * ./configure --prefix=/usr
+ * make
+ * make install
+ * \endcode
+ *
+ * When there are changes to libnxml's code, you will want to update you local
+ * copy. Run from the directory libnxml:
+ *
+ * \code
+ * cvs update -dP
+ * ./configure --prefix=/usr
+ * make
+ * make install
+ * \endcode
+ *
+ * \section Support
+ *
+ * Support for nXml is available to all via email: baku@ippolita.net.
+ *
+ * \section support1 Commercial Support
+ * Commercial users of nXml are strongly encouraged to purchase a commercial
+ * support contract, please contact me for a quotation. I will always
+ * prioritise support requests from those with support contracts.
+ *
+ * \section Donations
+ * Users not purchasing commercial support are encouraged (but not obliged) to
+ * make a donation. By donating you are supporting the principle of open
+ * source/free software and you will help ensure continued development of nXml.
+ */

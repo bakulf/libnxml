@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=@includedir@
+
+Name: libnxml
+Description: library C for creating, parsing and writing xml files or streams
+Version: @VERSION@
+Requires:
+Libs: -L${libdir} -lnxml
+Cflags: -I${includedir}
