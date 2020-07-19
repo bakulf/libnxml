@@ -61,7 +61,7 @@ main (int argc, char **argv)
 	    for (j = 0; j < 10; j++)
 	      {
 		attr = NULL;
-		fprintf (stderr, "Creatin a attribute... ");
+		fprintf (stdout, "Creating a attribute... ");
 		ret = nxml_add_attribute (data, item, &attr);
 		check (data, ret);
 
