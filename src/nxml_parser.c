@@ -1260,6 +1260,7 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
 	  if (freed)
 	    free (buffer);
 
+	  nxml_free_attribute (attr);
 	  return NXML_ERR_PARSER;
 	}
 
