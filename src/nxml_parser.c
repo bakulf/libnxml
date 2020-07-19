@@ -1254,7 +1254,7 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
 	  if (nxml->priv.func)
 	    nxml->priv.
 	      func (PACKAGE " " VERSION
-		    " suports only xml 1.1 or 1.0 (line %d)\n",
+		    " supports only xml 1.1 or 1.0 (line %d)\n",
 		    nxml->priv.line);
 
 	  if (freed)
