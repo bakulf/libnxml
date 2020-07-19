@@ -1,6 +1,9 @@
 noinst_PROGRAMS = parser write namespace
-check_PROGRAMS = new easy
+check_PROGRAMS = new easy test_base
 TESTS = $(check_PROGRAMS)
+
+test_base_SOURCES = test_base.c
+test_base_LDADD = ../src/libnxml.la
 
 parser_SOURCES = parser.c
 parser_LDADD = ../src/libnxml.la
