@@ -1194,6 +1194,19 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
   if (!r_size)
     r_size = strlen (r_buffer);
 
+  /* NOTE, 2020-07-20, Giovanni Simoni, dacav at fastmail dot com.
+   *
+   * For what I can understand, the '__nxml_utf_detection' function checks the
+   * encoding declared in the XML header.
+   *
+   * If the encoding of 'r_buffer' is convenient to parse (e.g. UTF-8), the
+   * returned value is 0, 'buffer' and 'size' are left untouched.
+   *
+   * Otherwise, the function allocates a memory buffer and re-encodes the
+   * content into it.  The returned value is 1, while 'buffer' and 'size' are
+   * assigned to the allocated buffer and its size, respectively.  We are
+   * responsible of freeing the buffer.
+   */
   switch ((freed =
 	   __nxml_utf_detection (r_buffer, r_size, &buffer, &size, &charset)))
     {
