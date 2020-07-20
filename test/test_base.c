@@ -116,7 +116,7 @@ run_test (const test_case_t *tc)
 
 #define weird_version "<?xml version=\"999.0\" encoding=\"UTF-8\"?>"
 
-#define xml_broken_afl                                                        \
+#define xml_broken_afl_0                                                      \
   "<?xml version='1.0\" encoding=\"UTF-8\" ?>"                                \
   "<rss version=\"2.0\">"                                                     \
   "<channel>"                                                                 \
@@ -135,6 +135,8 @@ run_test (const test_case_t *tc)
   "</channel>"                                                                \
   "</rss>"
 
+#define xml_broken_afl_1 "<?xml ven=\"1.0\""
+
 int
 main (int argc, char **argv)
 {
@@ -147,7 +149,10 @@ main (int argc, char **argv)
 
   test (nxml, good_xml, NXML_OK);
   test (nxml, weird_version, NXML_ERR_PARSER);
-  test (nxml, xml_broken_afl, NXML_ERR_PARSER);
+
+  /* Test cases reported by running the American Fuzzy Lop */
+  test (nxml, xml_broken_afl_0, NXML_ERR_PARSER);
+  test (nxml, xml_broken_afl_1, NXML_ERR_PARSER);
 
   nxml_free (nxml);
   return 0;

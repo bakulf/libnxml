@@ -271,10 +271,10 @@ __nxml_parse_get_attribute (nxml_t *doc,
    */
   char *tag = NULL, *value, *v;
 
+  *attr = NULL;
+
   if (!*size)
     return NXML_OK;
-
-  *attr = NULL;
 
   __nxml_escape_spaces (doc, buffer, size);
 
