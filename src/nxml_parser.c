@@ -1171,9 +1171,9 @@ __nxml_parse_get_tag (nxml_t * doc, char **buffer, size_t * size,
 }
 
 static nxml_error_t
-__nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
+__nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
 {
-  /* 
+  /*
    * Rule [1] - Document ::= prolog element Misc* - Char* RestrictedChar Char*
    */
 
@@ -1207,8 +1207,8 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
    * assigned to the allocated buffer and its size, respectively.  We are
    * responsible of freeing the buffer.
    */
-  switch ((freed =
-	   __nxml_utf_detection (r_buffer, r_size, &buffer, &size, &charset)))
+  switch ((freed = __nxml_utf_detection (r_buffer, r_size, &buffer, &size,
+                                         &charset)))
     {
     case 0:
       buffer = r_buffer;
@@ -1223,7 +1223,7 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
   nxml->version = NXML_VERSION_1_0;
   nxml->standalone = 1;
 
-  /* 
+  /*
    * Rule [22] - prolog ::= XMLDecl Misc* (doctypedecl Misc*)?
    * Rule [23] - XMLDecl ::= '<?xml' VersionInfo EncodingDecl? SDDecl? S? '?>'
    */
@@ -1232,114 +1232,113 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
       buffer += 6;
       size -= 6;
 
-      if ((err =
-	   __nxml_parse_get_attribute (nxml, &buffer, &size,
-				       &attr)) != NXML_OK)
-	{
-	  nxml_empty (nxml);
+      if ((err = __nxml_parse_get_attribute (nxml, &buffer, &size, &attr))
+          != NXML_OK)
+        {
+          nxml_empty (nxml);
 
-	  if (freed)
-	    free (buffer);
+          if (freed)
+            free (buffer);
 
-	  return err;
-	}
+          return err;
+        }
 
       if (!attr)
-	{
-	  if (nxml->priv.func)
-	    nxml->priv.func ("%s: expected 'version' attribute (line %d)\n",
-			     nxml->file ? nxml->file : "", nxml->priv.line);
+        {
+          if (nxml->priv.func)
+            nxml->priv.func ("%s: expected 'version' attribute (line %d)\n",
+                             nxml->file ? nxml->file : "", nxml->priv.line);
 
-	  if (freed)
-	    free (buffer);
+          if (freed)
+            free (buffer);
 
-	  return NXML_ERR_PARSER;
-	}
+          return NXML_ERR_PARSER;
+        }
 
       if (!strcmp (attr->value, "1.0"))
-	nxml->version = NXML_VERSION_1_0;
+        nxml->version = NXML_VERSION_1_0;
 
       else if (!strcmp (attr->value, "1.1"))
-	nxml->version = NXML_VERSION_1_1;
+        nxml->version = NXML_VERSION_1_1;
 
       else
-	{
-	  if (nxml->priv.func)
-	    nxml->priv.
-	      func (PACKAGE " " VERSION
-		    " supports only xml 1.1 or 1.0 (line %d)\n",
-		    nxml->priv.line);
+        {
+          if (nxml->priv.func)
+            nxml->priv.func (PACKAGE
+                             " " VERSION
+                             " supports only xml 1.1 or 1.0 (line %d)\n",
+                             nxml->priv.line);
 
-	  if (freed)
-	    free (buffer);
+          if (freed)
+            free (buffer);
 
-	  nxml_free_attribute (attr);
-	  return NXML_ERR_PARSER;
-	}
+          nxml_free_attribute (attr);
+          return NXML_ERR_PARSER;
+        }
 
       nxml_free_attribute (attr);
 
       while (!(err = __nxml_parse_get_attribute (nxml, &buffer, &size, &attr))
-	     && attr)
-	{
-	  if (!strcmp (attr->name, "standalone"))
-	    {
-	      if (!strcmp (attr->value, "yes"))
-		nxml->standalone = 1;
+             && attr)
+        {
+          if (!strcmp (attr->name, "standalone"))
+            {
+              if (!strcmp (attr->value, "yes"))
+                nxml->standalone = 1;
 
-	      else
-		nxml->standalone = 0;
-	    }
+              else
+                nxml->standalone = 0;
+            }
 
-	  else if (!strcmp (attr->name, "encoding"))
-	    {
-	      nxml->encoding = strdup (attr->value);
+          else if (!strcmp (attr->name, "encoding"))
+            {
+              nxml->encoding = strdup (attr->value);
 
-	      if (!nxml->encoding)
-		{
-		  nxml_empty (nxml);
-		  nxml_free_attribute (attr);
+              if (!nxml->encoding)
+                {
+                  nxml_empty (nxml);
+                  nxml_free_attribute (attr);
 
-		  if (freed)
-		    free (buffer);
+                  if (freed)
+                    free (buffer);
 
-		  return NXML_ERR_POSIX;
-		}
-	    }
+                  return NXML_ERR_POSIX;
+                }
+            }
 
-	  else
-	    {
+          else
+            {
 
-	      if (nxml->priv.func)
-		nxml->priv.func ("%s: unexpected attribute '%s' (line %d)\n",
-				 nxml->file ? nxml->file : "", attr->name,
-				 nxml->priv.line);
+              if (nxml->priv.func)
+                nxml->priv.func ("%s: unexpected attribute '%s' (line %d)\n",
+                                 nxml->file ? nxml->file : "", attr->name,
+                                 nxml->priv.line);
 
-	      nxml_empty (nxml);
-	      nxml_free_attribute (attr);
+              nxml_empty (nxml);
+              nxml_free_attribute (attr);
 
-	      if (freed)
-		free (buffer);
+              if (freed)
+                free (buffer);
 
-	      return NXML_ERR_PARSER;
-	    }
+              return NXML_ERR_PARSER;
+            }
 
-	  nxml_free_attribute (attr);
-	}
+          nxml_free_attribute (attr);
+        }
 
       if (err || strncmp (buffer, "?>", 2))
-	{
-	  if (nxml->priv.func)
-	    nxml->priv.func ("%s expected '?>' (line %d)\n",
-			     nxml->file ? nxml->file : "", nxml->priv.line);
+        {
+          if (nxml->priv.func)
+            nxml->priv.func ("%s expected '?>' (line %d)\n",
+                             nxml->file ? nxml->file : "", nxml->priv.line);
 
-	  nxml_empty (nxml);
+          nxml_empty (nxml);
 
-	  if (freed)
-	    free (buffer);
+          if (freed)
+            free (buffer);
 
-	  return NXML_ERR_PARSER;
-	}
+          return NXML_ERR_PARSER;
+        }
 
       buffer += 2;
       size -= 2;
@@ -1347,18 +1346,18 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
 
   root = last = NULL;
   while (!(err = __nxml_parse_get_tag (nxml, &buffer, &size, &tag, &doctype))
-	 && (doctype || tag))
+         && (doctype || tag))
     {
       if (doctype)
-	continue;
+        continue;
 
       if (tag->type == NXML_TYPE_ELEMENT && !root)
-	root = tag;
+        root = tag;
 
       if (last)
-	last->next = tag;
+        last->next = tag;
       else
-	nxml->data = tag;
+        nxml->data = tag;
 
       last = tag;
     }
@@ -1368,7 +1367,7 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
       nxml_empty (nxml);
 
       if (freed)
-	free (buffer);
+        free (buffer);
 
       return NXML_ERR_PARSER;
     }
@@ -1376,13 +1375,13 @@ __nxml_parse_buffer (nxml_t * nxml, char *r_buffer, size_t r_size)
   if (!root)
     {
       if (nxml->priv.func)
-	nxml->priv.func ("%s: No root element founded!\n",
-			 nxml->file ? nxml->file : "");
+        nxml->priv.func ("%s: No root element founded!\n",
+                         nxml->file ? nxml->file : "");
 
       nxml_empty (nxml);
 
       if (freed)
-	free (buffer);
+        free (buffer);
 
       return NXML_ERR_PARSER;
     }
