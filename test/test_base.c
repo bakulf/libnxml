@@ -116,6 +116,25 @@ run_test (const test_case_t *tc)
 
 #define weird_version "<?xml version=\"999.0\" encoding=\"UTF-8\"?>"
 
+#define xml_broken_afl                                                        \
+  "<?xml version='1.0\" encoding=\"UTF-8\" ?>"                                \
+  "<rss version=\"2.0\">"                                                     \
+  "<channel>"                                                                 \
+  "  <title>feed e</title>"                                                   \
+  "  <description>cha des</description>"                                      \
+  "  <item>"                                                                  \
+  "<title>t 0</title>"                                                        \
+  "    <link>httcom</link>"                                                   \
+  "    <description>hello</description>"                                      \
+  "  </item>"                                                                 \
+  "  <item>"                                                                  \
+  "    <title>title 1</title>"                                                \
+  "    <link>om</link>"                                                       \
+  "    <description>world</description>"                                      \
+  "  </item>"                                                                 \
+  "</channel>"                                                                \
+  "</rss>"
+
 int
 main (int argc, char **argv)
 {
@@ -128,6 +147,7 @@ main (int argc, char **argv)
 
   test (nxml, good_xml, NXML_OK);
   test (nxml, weird_version, NXML_ERR_PARSER);
+  test (nxml, xml_broken_afl, NXML_ERR_PARSER);
 
   nxml_free (nxml);
   return 0;
