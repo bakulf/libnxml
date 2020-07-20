@@ -1183,10 +1183,9 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
   nxml_data_t *tag, *last, *root;
   int doctype;
 
-  int freed;
-
+  void *to_free = NULL;
   char *buffer = NULL;
-  size_t size;
+  size_t size = 0;
 
   if (!r_buffer || !nxml)
     return NXML_ERR_DATA;
@@ -1207,13 +1206,15 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
    * assigned to the allocated buffer and its size, respectively.  We are
    * responsible of freeing the buffer.
    */
-  switch ((freed = __nxml_utf_detection (r_buffer, r_size, &buffer, &size,
-                                         &charset)))
+  switch (__nxml_utf_detection (r_buffer, r_size, &buffer, &size, &charset))
     {
     case 0:
       buffer = r_buffer;
       size = r_size;
       break;
+
+    case 1:
+      to_free = buffer;
 
     case -1:
       return NXML_ERR_POSIX;
@@ -1237,9 +1238,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
         {
           nxml_empty (nxml);
 
-          if (freed)
-            free (buffer);
-
+          free (to_free);
           return err;
         }
 
@@ -1249,9 +1248,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
             nxml->priv.func ("%s: expected 'version' attribute (line %d)\n",
                              nxml->file ? nxml->file : "", nxml->priv.line);
 
-          if (freed)
-            free (buffer);
-
+          free (to_free);
           return NXML_ERR_PARSER;
         }
 
@@ -1269,9 +1266,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
                              " supports only xml 1.1 or 1.0 (line %d)\n",
                              nxml->priv.line);
 
-          if (freed)
-            free (buffer);
-
+          free (to_free);
           nxml_free_attribute (attr);
           return NXML_ERR_PARSER;
         }
@@ -1299,9 +1294,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
                   nxml_empty (nxml);
                   nxml_free_attribute (attr);
 
-                  if (freed)
-                    free (buffer);
-
+                  free (to_free);
                   return NXML_ERR_POSIX;
                 }
             }
@@ -1317,9 +1310,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
               nxml_empty (nxml);
               nxml_free_attribute (attr);
 
-              if (freed)
-                free (buffer);
-
+              free (to_free);
               return NXML_ERR_PARSER;
             }
 
@@ -1334,9 +1325,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
 
           nxml_empty (nxml);
 
-          if (freed)
-            free (buffer);
-
+          free (to_free);
           return NXML_ERR_PARSER;
         }
 
@@ -1366,9 +1355,7 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
     {
       nxml_empty (nxml);
 
-      if (freed)
-        free (buffer);
-
+      free (to_free);
       return NXML_ERR_PARSER;
     }
 
@@ -1380,19 +1367,14 @@ __nxml_parse_buffer (nxml_t *nxml, char *r_buffer, size_t r_size)
 
       nxml_empty (nxml);
 
-      if (freed)
-        free (buffer);
-
+      free (to_free);
       return NXML_ERR_PARSER;
     }
 
-  if (freed)
-    free (buffer);
-
   nxml->charset_detected = charset;
-
   __nxml_namespace_parse (nxml);
 
+  free (to_free);
   return NXML_OK;
 }
 
