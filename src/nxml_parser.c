@@ -187,6 +187,13 @@ __nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
 {
   char attr[1024];
   int i;
+
+  /* NOTE, 2020-07-20, Giovanni Simoni, dacav at fastmail dot com.
+   *
+   * 'bytes' and 'ch' seem to be uninitialized, but they are implicitly
+   * assigned by the __NXML_NAMESTARTCHARS macro, which also assumes that
+   * a variable named 'buffer' exists.
+   */
   int byte;
   int64_t ch;
 
