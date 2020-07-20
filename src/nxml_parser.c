@@ -182,8 +182,12 @@ __nxml_parse_string (nxml_t * doc, char *buffer, int size)
   return real;
 }
 
-static char *
-__nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
+/* Returns 0 if there is no attribute
+ * Returns 1 if the attribute was assigned in *result
+ * Returns -1 in case of allocation error.
+ */
+static int
+__nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size, char **result)
 {
   char attr[1024];
   int i;
@@ -197,11 +201,13 @@ __nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
   int byte;
   int64_t ch;
 
+  *result = NULL;
+
   if (!*size)
-    return NULL;
+    return 0;
 
   if (!__NXML_NAMESTARTCHARS)
-    return NULL;
+    return 0;
 
   memcpy (&attr[0], *buffer, byte);
 
@@ -223,7 +229,7 @@ __nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
     {
       (*buffer) -= i;
       (*size) += i;
-      return NULL;
+      return 0;
     }
 
   i += __nxml_escape_spaces (doc, buffer, size);
@@ -232,7 +238,7 @@ __nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
     {
       (*buffer) -= i;
       (*size) += i;
-      return NULL;
+      return 0;
     }
 
   (*buffer)++;
@@ -240,8 +246,12 @@ __nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
 
   __nxml_escape_spaces (doc, buffer, size);
 
+  if (i >= sizeof(attr))
+    return 0;
+
   attr[i] = 0;
-  return strdup (attr);
+  *result = strdup (attr);
+  return (*result) ? 1 : -1;
 }
 
 static nxml_error_t
@@ -259,7 +269,7 @@ __nxml_parse_get_attribute (nxml_t *doc,
    * Rule [10] - AttValue ::= '"' ([^<&"] | Reference)* '"' |
    *                          "'" ([^<&'] | Reference)* "'"
    */
-  char *tag, *value, *v;
+  char *tag = NULL, *value, *v;
 
   if (!*size)
     return NXML_OK;
@@ -268,8 +278,14 @@ __nxml_parse_get_attribute (nxml_t *doc,
 
   __nxml_escape_spaces (doc, buffer, size);
 
-  if (!(tag = __nxml_parse_get_attr (doc, buffer, size)))
-    return NXML_OK;
+  switch (__nxml_parse_get_attr (doc, buffer, size, &tag)) {
+    case 0:
+      return NXML_OK;
+    case -1:
+      return NXML_ERR_POSIX;
+    default:
+      break;
+  }
 
   if (!(value = __nxml_get_value (doc, buffer, size)))
     {
