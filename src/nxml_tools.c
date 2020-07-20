@@ -59,7 +59,7 @@ __nxml_escape_spaces (nxml_t * doc, char **buffer, size_t * size)
 }
 
 char *
-__nxml_get_value (nxml_t * doc, char **buffer, size_t * size)
+__nxml_get_value (nxml_t *doc, char **buffer, size_t *size)
 {
   char *attr;
   int i;
@@ -81,11 +81,11 @@ __nxml_get_value (nxml_t * doc, char **buffer, size_t * size)
   (*size)--;
 
   i = 0;
-  while (((quot && *(*buffer + i) != '"')
-	  || (!quot && *(*buffer + i) != '\'')))
+  while (
+      ((quot && *(*buffer + i) != '"') || (!quot && *(*buffer + i) != '\'')))
     {
       if (*(*buffer + i) == '\n' && doc->priv.func)
-	doc->priv.line++;
+        doc->priv.line++;
 
       i++;
     }
@@ -96,7 +96,7 @@ __nxml_get_value (nxml_t * doc, char **buffer, size_t * size)
   else if (!quot && *(*buffer + i) != '\'')
     return NULL;
 
-  if (!(attr = (char *) malloc (sizeof (char) * (i + 1))))
+  if (!(attr = (char *)malloc (sizeof (char) * (i + 1))))
     return NULL;
 
   memcpy (attr, *buffer, i);
