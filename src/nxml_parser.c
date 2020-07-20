@@ -238,10 +238,12 @@ __nxml_parse_get_attr (nxml_t * doc, char **buffer, size_t * size)
 }
 
 static nxml_error_t
-__nxml_parse_get_attribute (nxml_t * doc, char **buffer, size_t * size,
-			    nxml_attr_t ** attr)
+__nxml_parse_get_attribute (nxml_t *doc,
+                            char **buffer,
+                            size_t *size,
+                            nxml_attr_t **attr)
 {
-  /* 
+  /*
    * Rule [41] - Attribute ::= Name Eq AttValue
    * Rule [25] - Eq ::= S? '=' S?
    * Rule [5]  - Name ::= NameStartChar (NameChar)*
@@ -267,8 +269,8 @@ __nxml_parse_get_attribute (nxml_t * doc, char **buffer, size_t * size,
       free (tag);
 
       if (doc->priv.func)
-	doc->priv.func ("%s: expected value of attribute (line %d)\n",
-			doc->file ? doc->file : "", doc->priv.line);
+        doc->priv.func ("%s: expected value of attribute (line %d)\n",
+                        doc->file ? doc->file : "", doc->priv.line);
       return NXML_ERR_PARSER;
     }
 
@@ -283,7 +285,7 @@ __nxml_parse_get_attribute (nxml_t * doc, char **buffer, size_t * size,
 
   __nxml_escape_spaces (doc, buffer, size);
 
-  if (!(*attr = (nxml_attr_t *) calloc (1, sizeof (nxml_attr_t))))
+  if (!(*attr = (nxml_attr_t *)calloc (1, sizeof (nxml_attr_t))))
     {
       free (tag);
       free (value);
