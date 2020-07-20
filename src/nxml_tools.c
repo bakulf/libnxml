@@ -88,6 +88,8 @@ __nxml_get_value (nxml_t *doc, char **buffer, size_t *size)
         doc->priv.line++;
 
       i++;
+      if (i >= *size)
+        return NULL;
     }
 
   if (quot && *(*buffer + i) != '"')
