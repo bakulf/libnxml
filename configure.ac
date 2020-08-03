@@ -11,15 +11,24 @@ m4_define([libnxml_version_info],
 AC_INIT([libnxml], [libnxml_version])
 AC_CONFIG_SRCDIR([src/nxml_parser.c])
 AC_CONFIG_MACRO_DIRS([m4])
+AC_CONFIG_FILES([
+    Makefile
+    doc/Makefile
+    doxy.conf
+    nxml.pc
+    src/Makefile
+    src/nxml.h
+    test/Makefile
+])
 
-LT_INIT
-
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([-Wall -Werror subdir-objects foreign])
 AM_SANITY_CHECK
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 AC_PROG_CC
+AM_PROG_AR
 AC_ISC_POSIX
+LT_INIT
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AM_PROG_CC_STDC
@@ -36,12 +45,4 @@ AC_SUBST(LIBNXML_MAJOR_VERSION, [libnxml_major_version])
 AC_SUBST(LIBNXML_MINOR_VERSION, [libnxml_minor_version])
 AC_SUBST(LIBNXML_MICRO_VERSION, [libnxml_macro_version])
 
-AC_OUTPUT([
-Makefile
-src/nxml.h
-src/Makefile
-test/Makefile 
-doc/Makefile 
-nxml.pc
-doxy.conf
-])
+AC_OUTPUT

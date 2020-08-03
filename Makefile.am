@@ -1,3 +1,4 @@
+ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src test doc
 
 EXTRA_DIST = nxml.pc nxml.pc.in doxy.conf doxy.conf.in
