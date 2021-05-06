@@ -33,4 +33,5 @@ test/easy
 test/namespace
 test/new
 test/parser
+test/test_base
 test/write

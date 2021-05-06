@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -19,19 +19,23 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #else
-#error Use configure; make; make install
+# error Use configure; make; make install
 #endif
 
 #include "nxml.h"
 
-int __nxml_atoi(char *str) {
+int
+__nxml_atoi (char *str)
+{
   int ret;
-  sscanf(str, "%x", (unsigned int *)&ret);
+  sscanf (str, "%x", (unsigned int *) &ret);
   return ret;
 }
 
-int __nxml_escape_spaces(nxml_t *doc, char **buffer, size_t *size) {
-  /*
+int
+__nxml_escape_spaces (nxml_t * doc, char **buffer, size_t * size)
+{
+  /* 
    * Rule [3] - S ::= (#x20 | #x9 | #xD | #xA)+
    */
 
@@ -40,21 +44,23 @@ int __nxml_escape_spaces(nxml_t *doc, char **buffer, size_t *size) {
   if (!*size)
     return 0;
 
-  while ((**buffer == 0x20 || **buffer == 0x9 || **buffer == 0xd ||
-          **buffer == 0xa) &&
-         *size) {
-    if (**buffer == 0xa && doc->priv.func)
-      doc->priv.line++;
+  while ((**buffer == 0x20 || **buffer == 0x9 || **buffer == 0xd
+	  || **buffer == 0xa) && *size)
+    {
+      if (**buffer == 0xa && doc->priv.func)
+	doc->priv.line++;
 
-    (*buffer)++;
-    (*size)--;
-    k++;
-  }
+      (*buffer)++;
+      (*size)--;
+      k++;
+    }
 
   return k;
 }
 
-char *__nxml_get_value(nxml_t *doc, char **buffer, size_t *size) {
+char *
+__nxml_get_value (nxml_t *doc, char **buffer, size_t *size)
+{
   char *attr;
   int i;
   int quot;
@@ -76,12 +82,15 @@ char *__nxml_get_value(nxml_t *doc, char **buffer, size_t *size) {
 
   i = 0;
   while (
-      ((quot && *(*buffer + i) != '"') || (!quot && *(*buffer + i) != '\''))) {
-    if (*(*buffer + i) == '\n' && doc->priv.func)
-      doc->priv.line++;
+      ((quot && *(*buffer + i) != '"') || (!quot && *(*buffer + i) != '\'')))
+    {
+      if (*(*buffer + i) == '\n' && doc->priv.func)
+        doc->priv.line++;
 
-    i++;
-  }
+      i++;
+      if (i >= *size)
+        return NULL;
+    }
 
   if (quot && *(*buffer + i) != '"')
     return NULL;
@@ -89,10 +98,10 @@ char *__nxml_get_value(nxml_t *doc, char **buffer, size_t *size) {
   else if (!quot && *(*buffer + i) != '\'')
     return NULL;
 
-  if (!(attr = (char *)malloc(sizeof(char) * (i + 1))))
+  if (!(attr = (char *)malloc (sizeof (char) * (i + 1))))
     return NULL;
 
-  memcpy(attr, *buffer, i);
+  memcpy (attr, *buffer, i);
 
   attr[i] = 0;
 
@@ -103,13 +112,15 @@ char *__nxml_get_value(nxml_t *doc, char **buffer, size_t *size) {
   return attr;
 }
 
-char *__nxml_trim(char *tmp) {
+char *
+__nxml_trim (char *tmp)
+{
   /* Trim function: */
   int i = 0;
   while (tmp[i] == 0x20 || tmp[i] == 0x9 || tmp[i] == 0xd || tmp[i] == 0xa)
     tmp++;
 
-  i = strlen(tmp);
+  i = strlen (tmp);
   i--;
 
   while (tmp[i] == 0x20 || tmp[i] == 0x9 || tmp[i] == 0xd || tmp[i] == 0xa)
@@ -117,7 +128,7 @@ char *__nxml_trim(char *tmp) {
 
   tmp[i + 1] = 0;
 
-  return strdup(tmp);
+  return strdup (tmp);
 }
 
 /* EOF */
