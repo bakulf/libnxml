@@ -1,5 +1,5 @@
-/* nXml - Copyright (C) 2005-2007 baku - Andrea Marchesini
- *                                     <baku@ippolita.net>
+/* nXml - Copyright (C) 2005-2021 baku - Andrea Marchesini
+ *                                       <baku@ippolita.net>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
