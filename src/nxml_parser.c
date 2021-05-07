@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -27,7 +27,7 @@
 static int
 __nxml_parse_unique_attribute (nxml_attr_t * attr, char *name)
 {
-  /* 
+  /*
    * Rule [40] - Well-formedness contraint: Unique Att Spec
    */
 
@@ -327,7 +327,7 @@ __nxml_parse_cdata (nxml_t * doc, char **buffer, size_t * size,
 		    nxml_data_t ** data)
 {
   /*
-   * Rule [18] - CDSect ::= CDStart CData CDEnd 
+   * Rule [18] - CDSect ::= CDStart CData CDEnd
    * Rule [19] - CDStart ::= '<![CDATA['
    * Rule [20] - CData ::= (Char * - (Char * ']]>' Char *))
    * Rule [21] - CDEnd ::= ']]>'
@@ -543,7 +543,7 @@ __nxml_parse_doctype (nxml_t * doc, char **buffer, size_t * size,
 		      int *doctype)
 {
   /*
-   * Rule [28] - doctypedecl ::= '<!DOCTYPE' S Name (S ExternalID)? S? 
+   * Rule [28] - doctypedecl ::= '<!DOCTYPE' S Name (S ExternalID)? S?
    *                             ('[' intSubset '] S?)? '>'
    */
 
@@ -669,7 +669,7 @@ static nxml_error_t
 __nxml_parse_comment (nxml_t * doc, char **buffer, size_t * size,
 		      nxml_data_t ** data)
 {
-  /* 
+  /*
    * Rule [15] - Comment ::= '<!--' ((Char - '-') | ('-' (Char - '-')))* '-->'
    */
 
@@ -720,8 +720,8 @@ static nxml_error_t
 __nxml_parse_pi (nxml_t * doc, char **buffer, size_t * size,
 		 nxml_data_t ** data)
 {
-  /* 
-   * Rule [16] - PI ::= '<?' PITarget (S (Char * - (Char * '?>' Char *)))? 
+  /*
+   * Rule [16] - PI ::= '<?' PITarget (S (Char * - (Char * '?>' Char *)))?
    *                    '?>'
    * Rule [17] - PITarget ::= Name - (('X' | 'x') ('M' | 'm') ('L' | 'l'))
    */
@@ -893,7 +893,7 @@ static nxml_error_t
 __nxml_parse_close (nxml_t * doc, char **buffer, size_t * size,
 		    nxml_data_t ** data)
 {
-  /* 
+  /*
    * Rule [42] - ETag ::= '</' Name S? '>'
    */
 
