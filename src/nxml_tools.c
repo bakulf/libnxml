@@ -40,9 +40,8 @@ int __nxml_escape_spaces(nxml_t *doc, char **buffer, size_t *size) {
   if (!*size)
     return 0;
 
-  while ((**buffer == 0x20 || **buffer == 0x9 || **buffer == 0xd ||
-          **buffer == 0xa) &&
-         *size) {
+  while (*size && (**buffer == 0x20 || **buffer == 0x9 || **buffer == 0xd ||
+                   **buffer == 0xa)) {
     if (**buffer == 0xa && doc->priv.func)
       doc->priv.line++;
 

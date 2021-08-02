@@ -770,7 +770,7 @@ static nxml_error_t __nxml_parse_text(nxml_t *doc, char **buffer, size_t *size,
   if (!*size)
     return NXML_OK;
 
-  while (*(*buffer + i) != '<' && i < *size) {
+  while (i < *size && *(*buffer + i) != '<') {
     if (*(*buffer + i) == 0xa && doc->priv.func)
       doc->priv.line++;
     i++;
@@ -900,6 +900,8 @@ static nxml_error_t __nxml_parse_get_tag(nxml_t *doc, char **buffer,
   if (**buffer != '<')
     return __nxml_parse_text(doc, buffer, size, data);
 
+  if (*size <= 1)
+    return NXML_OK;
   (*buffer) += 1;
   (*size) -= 1;
 
