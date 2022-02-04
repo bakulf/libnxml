@@ -591,13 +591,13 @@ static nxml_error_t __nxml_parse_doctype(nxml_t *doc, char **buffer,
     value++;
 
   if (value && *value == '[') {
-    unsigned int size;
+    size_t size;
 
     value++;
     size = strlen(value);
 
     while (size > 0 && value && *value)
-      __nxml_parse_entity(doc, &value, (size_t *)&size);
+      __nxml_parse_entity(doc, &value, &size);
   }
 
   return NXML_OK;
