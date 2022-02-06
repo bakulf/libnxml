@@ -51,6 +51,7 @@ static char *__nxml_parse_string(nxml_t *doc, char *buffer, int size) {
     if (*(buffer + i) == 0xd)
       continue;
 
+    /*
     if (*(buffer + i) == 0xa || *(buffer + i) == 0x9 || *(buffer + i) == 0x20) {
       if (!q) {
         if (!doc->priv.textindent)
@@ -60,7 +61,8 @@ static char *__nxml_parse_string(nxml_t *doc, char *buffer, int size) {
       }
     }
 
-    else if (*(buffer + i) == '&') {
+    */
+    if (*(buffer + i) == '&') {
       if (!strncmp(buffer + i, "&lt;", 4)) {
         __nxml_string_add(ret, "<", 1);
         i += 3;
