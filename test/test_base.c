@@ -144,6 +144,17 @@ static void run_test(const test_case_t *tc) {
 
 #define xml_broken_afl_1 "<?xml ven=\"1.0\""
 
+#define xml_broken_afl_2 \
+  "<!DOCTYPE root [\n" \
+  "<!ELEMENT root (elem)>\n" \
+  "<!ELEMENT elem (#PCDATA)>\n" \
+  "<!ATTLIST elem id ID #IMPLIED>\n" \
+  "<!ENTITY target SYSTEM \"dtds/737840.ent\">\n" \
+  "]>\n" \
+  "<root>\n" \
+  "  &target;\n" \
+  "</root>\n"
+
 int main(int argc, char **argv) {
   nxml_t *nxml;
 
@@ -158,6 +169,7 @@ int main(int argc, char **argv) {
   /* Test cases reported by running the American Fuzzy Lop */
   test(nxml, xml_broken_afl_0, NXML_ERR_PARSER);
   test(nxml, xml_broken_afl_1, NXML_ERR_PARSER);
+  test(nxml, xml_broken_afl_2, NXML_OK);
 
   nxml_free(nxml);
   return 0;
