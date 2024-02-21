@@ -896,6 +896,9 @@ static nxml_error_t __nxml_parse_get_tag(nxml_t *doc, char **buffer,
 
   __nxml_escape_spaces(doc, buffer, size);
 
+  if (!*size)
+    return NXML_OK;
+
   /* Text */
   if (**buffer != '<')
     return __nxml_parse_text(doc, buffer, size, data);

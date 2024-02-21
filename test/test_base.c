@@ -88,12 +88,12 @@ static void run_test(const test_case_t *tc) {
          nxml_strerror(tc->nxml, e));
 }
 
-#define test(_nxml, _test_case, _expected_result)                              \
+#define testn(_nxml, _test_case, _len, _expected_result)                       \
   do {                                                                         \
     test_case_t tc = {.label = #_test_case,                                    \
                       .nxml = _nxml,                                           \
                       .content = _test_case,                                   \
-                      .content_len = sizeof(_test_case) - 1,                   \
+                      .content_len = _len,                                     \
                       .expected_result = _expected_result};                    \
     tc.parse_as = as_buffer;                                                   \
     run_test(&tc);                                                             \
@@ -101,6 +101,9 @@ static void run_test(const test_case_t *tc) {
     tc.parse_as = as_file;                                                     \
     run_test(&tc);                                                             \
   } while (0)
+
+#define test(_nxml, _test_case, _expected_result)                              \
+  testn(_nxml, _test_case, sizeof(_test_case) - 1, _expected_result)
 
 #define good_xml                                                               \
   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"                                 \
@@ -165,6 +168,17 @@ int main(int argc, char **argv) {
 
   test(nxml, good_xml, NXML_OK);
   test(nxml, weird_version, NXML_ERR_PARSER);
+
+  // Test case for out of bounds read in __nxml_parse_get_tag(). Allocate a page
+  // worth of memory and put the problematic input at the end in the hopes of
+  // causing out of bounds reads to trigger a segmentation fault as the adjacent
+  // page is hopefully not mapped.
+  char *buf = malloc(4096);
+  if (buf == NULL)
+    err(1, NULL);
+  buf[4095] = ' ';
+  testn(nxml, &buf[4095], 1, NXML_ERR_PARSER);
+  free(buf);
 
   /* Test cases reported by running the American Fuzzy Lop */
   test(nxml, xml_broken_afl_0, NXML_ERR_PARSER);

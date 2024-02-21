@@ -20,4 +20,4 @@ easy_LDADD = ../src/libnxml.la
 namespace_SOURCES = namespace.c
 namespace_LDADD = ../src/libnxml.la
 
-AM_CPPFLAGS = -I$(srcdir)/../src
+AM_CPPFLAGS = -I$(top_builddir)/src -I$(top_srcdir)/src
