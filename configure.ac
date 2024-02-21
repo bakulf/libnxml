@@ -1,6 +1,6 @@
 m4_define([libnxml_major_version], [0])
 m4_define([libnxml_minor_version], [18])
-m4_define([libnxml_macro_version], [4])
+m4_define([libnxml_macro_version], [5])
 
 m4_define([libnxml_version],
           [libnxml_major_version.libnxml_minor_version.libnxml_macro_version])

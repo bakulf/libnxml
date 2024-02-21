@@ -1,3 +1,6 @@
+20240221	libnxml		0.18.5
+	A release to include a few bugfixes
+
 20210802	libnxml		0.18.4
 	Dacav's patches to fix crashes, indentation, tests and much more.
 
