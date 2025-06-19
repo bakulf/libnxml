@@ -14,7 +14,7 @@ libnxml_la_SOURCES = \
 	nxml_tools.c \
 	nxml_namespace.c
 
-libnxml_la_LDFLAGS = -version-info @LIBNXML_VERSION_INFO@
+libnxml_la_LDFLAGS = -no-undefined -version-info @LIBNXML_VERSION_INFO@
 
 EXTRA_DIST = nxml.h.in nxml.h nxml_internal.h
 
