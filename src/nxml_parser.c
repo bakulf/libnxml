@@ -191,7 +191,7 @@ static int __nxml_parse_get_attr(nxml_t *doc, char **buffer, size_t *size,
   (*buffer) += byte;
   (*size) -= byte;
 
-  while (__NXML_NAMECHARS && *size && i < sizeof(attr) - 1) {
+  while (__NXML_NAMECHARS && *size && i + byte < sizeof(attr)) {
     memcpy(&attr[i], *buffer, byte);
 
     i += byte;
@@ -415,7 +415,7 @@ static void __nxml_parse_entity(nxml_t *doc, char **buffer, size_t *size) {
   (*buffer) += byte;
   (*size) -= byte;
 
-  while (__NXML_NAMECHARS && *size && i < sizeof(name) - 1) {
+  while (__NXML_NAMECHARS && *size && i + byte < sizeof(name)) {
     memcpy(&name[i], *buffer, byte);
 
     i += byte;
@@ -517,7 +517,7 @@ static nxml_error_t __nxml_parse_doctype(nxml_t *doc, char **buffer,
   (*buffer) += byte;
   (*size) -= byte;
 
-  while (__NXML_NAMECHARS && *size && i < sizeof(str) - 1) {
+  while (__NXML_NAMECHARS && *size && i + byte < sizeof(str)) {
     memcpy(&str[i], *buffer, byte);
 
     i += byte;
@@ -835,7 +835,7 @@ static nxml_error_t __nxml_parse_close(nxml_t *doc, char **buffer, size_t *size,
   (*buffer) += byte;
   (*size) -= byte;
 
-  while (__NXML_NAMECHARS && *size && i < sizeof(str) - 1) {
+  while (__NXML_NAMECHARS && *size && i + byte < sizeof(str)) {
     memcpy(&str[i], *buffer, byte);
 
     i += byte;
@@ -938,7 +938,7 @@ static nxml_error_t __nxml_parse_get_tag(nxml_t *doc, char **buffer,
   (*buffer) += byte;
   (*size) -= byte;
 
-  while (__NXML_NAMECHARS && *size && i < sizeof(str) - 1) {
+  while (__NXML_NAMECHARS && *size && i + byte < sizeof(str)) {
     memcpy(&str[i], *buffer, byte);
 
     i += byte;
