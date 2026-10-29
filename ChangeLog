@@ -1,3 +1,7 @@
+20261029	libnxml		0.18.6
+	Fix a stack buffer overflow in XML name parsing.
+	Reported and fixed by Deus Rex.
+
 20240221	libnxml		0.18.5
 	A release to include a few bugfixes
 
